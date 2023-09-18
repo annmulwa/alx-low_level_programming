@@ -2,33 +2,47 @@
 
 /**
  * _atoi - converts a string to an integer
- * @s: contains the string
- * Return: an integer
+ * @s: contains the string to be converted
+ *
+ * Return: the int converted from the string
  */
 
 int _atoi(char *s)
 {
-	unsigned int count = 0, size = 0, j = 0, n = 1, k = 1, i;
+	int j, a, m, len, i, digit;
 
-	while (*(s + count) != '\0')
+	j = 0;
+	a = 0;
+	m = 0;
+	len = 0;
+	i = 0;
+	digit = 0;
+
+	while (s[len] != '\0')
+		len++;
+
+	while (j < len && i == 0)
 	{
-		if (size > 48 && (*(s + count) < 48 || *(s + count) > 57))
-			break;
-		if (*(s + count) == 45)
-			n *= -1;
-		if ((*(s + count) >= 48) && (*(s + count) <= 57))
+		if (s[j] == '-')
+			++a;
+
+		if (s[j] >= '0' && s[j] <= '9')
 		{
-			if (size > 48)
-				k *= 10;
-			size++;
+			digit = s[j] - '0';
+			if (a % 2)
+				digit = -digit;
+			m = m * 10 + digit;
+			i = 1;
+			if (s[j + 1] < '0' || s[j + 1] > '9')
+				break;
+			i = 0;
 		}
-		count++;
+		j++;
 	}
 
-	for (i = count - size; i < count; i++)
-	{
-		j = j + ((*(s + 1) - 48) * k);
-		k /= 10;
-	}
-	return (j * n);
+	if (i == 0)
+		return (0);
+
+	return (m);
 }
+
