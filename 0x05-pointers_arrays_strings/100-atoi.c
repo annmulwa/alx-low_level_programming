@@ -12,13 +12,13 @@ int _atoi(char *s)
 
 	while (*(s + count) != '\0')
 	{
-		if (size > 0 && (*(s + count) < 48 || *(s + count) > 57))
+		if (size > 48 && (*(s + count) < 48 || *(s + count) > 57))
 			break;
 		if (*(s + count) == 45)
 			n *= -1;
 		if ((*(s + count) >= 48) && (*(s + count) <= 57))
 		{
-			if (size > 0)
+			if (size > 48)
 				k *= 10;
 			size++;
 		}
