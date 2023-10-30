@@ -33,7 +33,7 @@ ssize_t read_textfile(const char *filename, size_t letters)
 		return (0);
 	}
 	filesize[lettersnum] = '\0';
-	printf("%s", filesize);
+	write(STDOUT_FILENO, filesize, lettersnum);
 	free(filesize);
 	fclose(readfile);
 	return (lettersnum);
