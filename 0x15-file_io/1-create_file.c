@@ -9,21 +9,24 @@
 
 int create_file(const char *filename, char *text_content)
 {
-	FILE *createfile;
+	int createfile, writeoutput;
 
 	if (filename == NULL)
 		return (-1);
-	createfile = fopen(filename, "w");
-	if (createfile == NULL)
+	createfile = open(filename, O_CREAT | O_WRONLY | O_TRUNC, S_IRUSR | S_IWUSR);
+	if (createfile == -1)
 		return (-1);
 	if (text_content != NULL)
 	{
-		if (fputs(text_content, createfile) == EOF)
+		writeoutput = write(createfile, text_content, strlen(text_content));
 		{
-			fclose(createfile);
-			return (-1);
+			if (writeoutput == -1)
+			{
+				close(createfile);
+				return (-1);
+			}
 		}
 	}
-	fclose(createfile);
+	close(createfile);
 	return (1);
 }
